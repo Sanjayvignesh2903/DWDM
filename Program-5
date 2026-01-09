@@ -1,0 +1,25 @@
+# Input Data
+age <- c(23, 23, 27, 27, 39, 41, 47, 49, 50, 52, 54, 54, 56, 57, 58, 58, 60, 61)
+fat <- c(9.5, 26.5, 7.8, 17.8, 31.4, 25.9, 27.4, 27.2, 31.2, 34.6, 42.5, 28.8, 33.4, 30.2, 34.1, 32.9, 41.2, 35.7)
+
+# (a) Calculations
+summary_stats <- data.frame(
+  Variable = c("Age", "%Fat"),
+  Mean = c(mean(age), mean(fat)),
+  Median = c(median(age), median(fat)),
+  Std_Dev = c(sd(age), sd(fat))
+)
+print(summary_stats)
+
+# (b) Boxplots
+par(mfrow=c(1,2))
+boxplot(age, main="Boxplot of Age", col="lightblue", ylab="Years")
+boxplot(fat, main="Boxplot of %Fat", col="lightgreen", ylab="% Fat")
+
+# (c) Scatter Plot and Q-Q Plots
+par(mfrow=c(2,2)) # Resetting grid for more plots
+plot(age, fat, main="Scatter Plot: Age vs %Fat", xlab="Age", ylab="% Fat", pch=19, col="blue")
+abline(lm(fat ~ age), col="red") # Adding regression line
+
+qqnorm(age, main="Q-Q Plot: Age"); qqline(age, col="red")
+qqnorm(fat, main="Q-Q Plot: %Fat"); qqline(fat, col="red")
