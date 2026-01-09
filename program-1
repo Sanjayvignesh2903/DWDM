@@ -1,0 +1,19 @@
+# Data Input
+lower_bounds <- c(1, 5, 15, 20, 50, 80)
+upper_bounds <- c(5, 15, 20, 50, 80, 110)
+frequencies <- c(200, 450, 300, 1500, 700, 44)
+
+# Calculations
+N <- sum(frequencies)
+target <- N/2
+cum_freq <- c(0, cumsum(frequencies)[-6])
+median_class_idx <- which(cum_freq + frequencies >= target)[1]
+L <- lower_bounds[median_class_idx]
+CF <- cum_freq[median_class_idx]
+f <- frequencies[median_class_idx]
+h <- upper_bounds[median_class_idx] - L
+
+# Formula Application
+median_value <- L + ((target - CF) / f) * h
+
+cat("The approximate median value is:", median_value, "\n")
