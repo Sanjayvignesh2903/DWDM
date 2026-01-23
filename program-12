@@ -1,0 +1,25 @@
+# Define the preference counts for each photograph
+A <- c(18, 2, 20)
+B <- c(22, 28, 10)
+C <- c(20, 40, 40)
+
+# Create a data frame for the preferences
+preferences <- data.frame(A, B, C)
+
+# 1. Sample covariance between B and C
+cov_BC <- cov(preferences$B, preferences$C)
+print(paste("Covariance B and C:", cov_BC))
+
+# 2. Sample covariance matrix for all preferences
+cov_matrix <- cov(preferences)
+print("Covariance Matrix:")
+print(cov_matrix)
+
+# 3. Sample correlation between B and C
+cor_BC <- cor(preferences$B, preferences$C)
+print(paste("Correlation B and C:", cor_BC))
+
+# 4. Sample correlation matrix for all preferences
+cor_matrix <- cor(preferences)
+print("Correlation Matrix:")
+print(cor_matrix)
