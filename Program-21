@@ -1,0 +1,13 @@
+# Load directly from a reliable online repository
+url <- "https://raw.githubusercontent.com/jbrownlee/Datasets/master/pima-indians-diabetes.data.csv"
+
+# Note: This version often doesn't have headers, so we add them
+column_names <- c("Pregnancies", "Glucose", "BloodPressure", "SkinThickness", 
+                  "Insulin", "BMI", "DiabetesPedigreeFunction", "Age", "Outcome")
+
+diabetes <- read.csv(url, col.names = column_names)
+
+# Now run your plots
+plot(diabetes$Age, diabetes$BloodPressure, 
+     main="Blood Pressure vs Age", 
+     xlab="Age", ylab="Blood Pressure", pch=19, col="blue")
