@@ -1,0 +1,18 @@
+# 9. Tennis Coach Outlier Detection
+
+# Define the dataset of player scores
+player_scores <- c(12, 45, 48, 50, 52, 53, 55, 58, 60, 95)
+
+# Create a boxplot to visualize the distribution and identify outliers
+# In R, outliers are defined as values more than 1.5 * IQR from the box
+boxplot(player_scores, 
+        main = "Tennis Team Performance: Outlier Detection",
+        ylab = "Points Scored",
+        col = "lightgreen",
+        border = "darkgreen",
+        pch = 19,      # Style for the outlier points
+        cex = 1.5)     # Size of the outlier points
+
+# Extract the specific values of the outliers for the coach
+outliers <- boxplot.stats(player_scores)$out
+cat("Outliers identified by the coach:", outliers)
