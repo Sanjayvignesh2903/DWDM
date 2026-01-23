@@ -1,0 +1,19 @@
+# Load the built-in dataset
+data("AirPassengers")
+
+# Define the custom breaks as requested
+# Starting at 100, with bins 150 wide up to 700
+custom_breaks <- seq(100, 700, by = 150)
+
+# Generate the histogram
+hist(AirPassengers, 
+     breaks = custom_breaks, 
+     col = "steelblue", 
+     border = "white",
+     main = "Histogram of AirPassengers",
+     xlab = "Number of Passengers",
+     ylab = "Frequency",
+     xaxt = "n") # Disable default x-axis to add custom labels
+
+# Add custom x-axis labels to match the breaks
+axis(1, at = custom_breaks)
