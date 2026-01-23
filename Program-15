@@ -1,0 +1,15 @@
+# Define the data
+data <- c(200, 300, 400, 600, 1000)
+
+# (a) Min-Max Normalization
+min_val <- min(data)
+max_val <- max(data)
+min_max_norm <- (data - min_val) / (max_val - min_val)
+print("Min-Max Normalized Data:")
+print(min_max_norm)
+
+# (b) Z-score Normalization
+# Note: R's scale() function uses sample standard deviation by default
+z_score_norm <- scale(data)
+print("Z-score Normalized Data:")
+print(as.vector(z_score_norm))
