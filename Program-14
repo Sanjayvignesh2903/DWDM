@@ -1,0 +1,17 @@
+# 1. Define the datasets
+class_a <- c(76, 35, 47, 64, 95, 66, 89, 36, 84)
+class_b <- c(51, 56, 84, 60, 59, 70, 63, 66, 50)
+
+# 2. Combine into a list for plotting
+exam_results <- list("Class A" = class_a, "Class B" = class_b)
+
+# 3. Create the Boxplot
+boxplot(exam_results,
+        main = "Year 9 Exam Performance Comparison",
+        ylab = "Exam Scores",
+        col = c("lightblue", "lightgreen"),
+        border = "darkgrey",
+        las = 1)
+
+# 4. Optional: Add the mean points to the boxplot
+points(sapply(exam_results, mean), col="red", pch=18, cex=1.5)
