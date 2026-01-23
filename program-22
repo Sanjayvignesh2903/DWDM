@@ -1,0 +1,58 @@
+# 1. INSTALL AND LOAD NECESSARY LIBRARIES
+if(!require(arules)) install.packages("arules")
+library(arules)
+
+# 2. DATA PREPARATION
+# Creating the dataset based on the provided image
+# Support = 3 out of 10 transactions = 0.3
+dataset <- list(
+  c("a", "d", "e"),       # Transaction 0001
+  c("a", "b", "c", "e"),  # Transaction 0024
+  c("a", "b", "d", "e"),  # Transaction 0012
+  c("a", "c", "d", "e"),  # Transaction 0031
+  c("b", "c", "e"),       # Transaction 0015
+  c("b", "d", "e"),       # Transaction 0022
+  c("c", "d"),            # Transaction 0029
+  c("a", "b", "c"),       # Transaction 0040
+  c("a", "d", "e"),       # Transaction 0033
+  c("a", "b", "e")        # Transaction 0038
+)
+
+# Convert list to a transactions object
+trans <- as(dataset, "transactions")
+
+# Display the transaction data summary
+print("--- Transaction Summary ---")
+summary(trans)
+inspect(trans)
+
+# ---------------------------------------------------------
+# 3. APRIORI ALGORITHM
+# ---------------------------------------------------------
+print("--- Running Apriori Algorithm ---")
+# Setting Support = 0.3 (3/10) and Confidence = 0.5 (50%)
+apriori_rules <- apriori(trans, 
+                         parameter = list(supp = 0.3, conf = 0.5, target = "rules"))
+
+# Sort by lift to see the strongest associations
+apriori_results <- sort(apriori_rules, by = "lift")
+inspect(apriori_results)
+
+# ---------------------------------------------------------
+# 4. FP-GROWTH (via Frequent Itemset Mining / ECLAT)
+# ---------------------------------------------------------
+print("--- Running Frequent Itemset Mining (ECLAT/FP-Style) ---")
+# Finding frequent itemsets first
+frequent_itemsets <- eclat(trans, parameter = list(supp = 0.3, maxlen = 10))
+
+# Generating rules from the discovered itemsets
+fp_rules <- ruleInduction(frequent_itemsets, trans, confidence = 0.5)
+
+# Sort and display results
+fp_results <- sort(fp_rules, by = "lift")
+inspect(fp_results)
+
+# ---------------------------------------------------------
+# 5. EXPORTING RESULTS (Optional)
+# ---------------------------------------------------------
+# write(apriori_results, file = "association_rules.csv", sep = ",", quote = TRUE, row.names = FALSE)
