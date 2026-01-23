@@ -1,0 +1,50 @@
+# Load necessary library for visualization
+library(ggplot2)
+
+# 1. Define the sorted dataset
+prices <- c(1, 1, 5, 5, 5, 5, 5, 8, 8, 10, 10, 10, 10, 12, 14, 
+            14, 14, 15, 15, 15, 15, 15, 15, 18, 18, 18, 18, 18, 20, 
+            20, 20, 20, 20, 20, 21, 21, 21, 21, 25, 25, 25, 25, 25, 28, 28, 30)
+
+# (i) Equal-frequency partitioning (Bin = 3)
+# Total N = 46. We split into 15, 15, and 16.
+bin1 <- prices[1:15]
+bin2 <- prices[16:30]
+bin3 <- prices[31:46]
+
+cat("--- Equal Frequency Bins ---\n")
+print(bin1); print(bin2); print(bin3)
+
+# (ii) Data Smoothing
+# Smoothing by Bin Means
+s_mean1 <- rep(mean(bin1), length(bin1))
+s_mean2 <- rep(mean(bin2), length(bin2))
+s_mean3 <- rep(mean(bin3), length(bin3))
+
+cat("\n--- Smoothed by Bin Means ---\n")
+print(round(s_mean1, 2)); print(round(s_mean2, 2)); print(round(s_mean3, 2))
+
+# Smoothing by Bin Boundaries
+smooth_bounds <- function(x) {
+  low <- min(x)
+  high <- max(x)
+  # Replace each value with the closer boundary
+  sapply(x, function(val) if (abs(val - low) <= abs(val - high)) low else high)
+}
+
+s_bound1 <- smooth_bounds(bin1)
+s_bound2 <- smooth_bounds(bin2)
+s_bound3 <- smooth_bounds(bin3)
+
+cat("\n--- Smoothed by Bin Boundaries ---\n")
+print(s_bound1); print(s_bound2); print(s_bound3)
+
+# (iii) Plot Histogram for the frequency division
+# We use 3 bins to match the requested partitioning
+hist(prices, 
+     breaks = 3, 
+     col = "skyblue", 
+     border = "white",
+     main = "Histogram of Electronics Prices",
+     xlab = "Price ($)", 
+     ylab = "Frequency")
