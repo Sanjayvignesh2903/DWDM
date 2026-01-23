@@ -1,0 +1,29 @@
+library(arules)
+
+# Transaction matrix from table (corrected T7: Beer+Diapers)
+trans_matrix <- matrix(FALSE, nrow=9, ncol=6,
+                       dimnames=list(1:9, c("Milk","Beer","Diapers","Bread","Butter","Cookies")))
+trans_matrix[1,] <- c(TRUE,TRUE,TRUE,FALSE,FALSE,FALSE)  # Milk,Beer,Diapers
+trans_matrix[2,] <- c(TRUE,FALSE,FALSE,TRUE,TRUE,FALSE)  # Milk,Bread,Butter
+trans_matrix[3,] <- c(TRUE,FALSE,TRUE,FALSE,FALSE,TRUE)  # Milk,Diapers,Cookies
+trans_matrix[4,] <- c(FALSE,FALSE,FALSE,TRUE,TRUE,TRUE)  # Bread,Butter,Cookies
+trans_matrix[5,] <- c(FALSE,TRUE,FALSE,TRUE,TRUE,TRUE)   # Beer,Bread,Butter,Cookies
+trans_matrix[6,] <- c(FALSE,FALSE,TRUE,TRUE,TRUE,FALSE)  # Bread,Butter,Diapers
+trans_matrix[7,] <- c(FALSE,TRUE,TRUE,FALSE,FALSE,FALSE) # Beer,Diapers
+trans_matrix[8,] <- c(TRUE,FALSE,TRUE,TRUE,TRUE,FALSE)   # Milk,Diapers,Bread,Butter
+trans_matrix[9,] <- c(FALSE,TRUE,FALSE,FALSE,FALSE,TRUE) # Beer,Cookies
+
+trans <- as(trans_matrix, "transactions")
+
+# PART (a): Maximum association rules (all possible non-empty A=>C where A,C disjoint)
+all_rules <- apriori(trans, parameter=list(support=0, target="rules",
+                                           maxlen=6, conf=0), control=list(verbose=FALSE))
+max_rules <- length(all_rules)
+print(paste("Part (a) - Maximum association rules:", max_rules))
+
+# PART (b): Maximum frequent itemset size (minsup > 0)
+all_itemsets <- apriori(trans, parameter=list(support=0, target="frequent itemsets"),
+                        control=list(verbose=FALSE))
+max_size <- max(size(all_itemsets))
+print(paste("Part (b) - Maximum frequent itemset size:", max_size))
+
