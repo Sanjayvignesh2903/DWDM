@@ -1,0 +1,32 @@
+# 1. Download the Dataset
+# This URL points to the 'water' dataset from the HSAUR package 
+# hosted on the Rdatasets repository.
+url <- "https://raw.githubusercontent.com/vincentarelbundock/Rdatasets/master/csv/HSAUR/water.csv"
+water_data <- read.csv(url)
+
+# Remove the first index column if necessary
+water_data <- water_data[, -1]
+
+# 2. Check for linear relation using the plot function
+plot(water_data$hardness, water_data$mortality,
+     main = "Mortality vs. Water Hardness",
+     xlab = "Water Hardness",
+     ylab = "Mortality",
+     pch = 19, col = "darkblue")
+
+# 3. Fit the Data into a Linear Regression model
+# Formula: mortality (dependent) ~ hardness (independent)
+model <- lm(mortality ~ hardness, data = water_data)
+
+# Display the summary of the model
+summary(model)
+
+# Add the regression line to the plot
+abline(model, col = "red", lwd = 2)
+
+# 4. Predict the mortality for hardness = 88
+new_data <- data.frame(hardness = 88)
+predicted_mortality <- predict(model, newdata = new_data)
+
+# Output the prediction
+cat("Predicted mortality for a hardness of 88 is:", predicted_mortality)
