@@ -1,0 +1,22 @@
+# Load the built-in mtcars dataset
+data(mtcars)
+
+# Create the boxplot
+# The formula mpg ~ cyl means: plot mpg grouped by cyl
+boxplot(mpg ~ cyl, 
+        data = mtcars,
+        main = "MPG vs. Number of Cylinders",
+        xlab = "Number of Cylinders (cyl)",
+        ylab = "Miles Per Gallon (mpg)",
+        col = c("tomato", "gold", "skyblue"),
+        border = "brown",
+        notch = FALSE)
+
+# Optional: Add the individual data points on top of the boxplot for better visibility
+stripchart(mpg ~ cyl, 
+           data = mtcars, 
+           vertical = TRUE, 
+           method = "jitter", 
+           add = TRUE, 
+           pch = 20, 
+           col = "black")
