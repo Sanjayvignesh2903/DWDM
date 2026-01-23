@@ -1,0 +1,13 @@
+library(ggplot2)
+library(tidyr)
+
+# Reshape data to long format
+mtcars_long <- mtcars %>%
+  tibble::rownames_to_column("car") %>%
+  pivot_longer(cols = c(mpg, qsec), names_to = "attribute", values_to = "value")
+
+# Plot using a single ggplot call
+ggplot(mtcars_long, aes(x = car, y = value, color = attribute, group = attribute)) +
+  geom_line() +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
+  labs(title = "mpg vs qsec across Car Models", x = "Car Model", y = "Value")
